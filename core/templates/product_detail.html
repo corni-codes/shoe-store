@@ -1,0 +1,94 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Shop</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+
+<body>
+
+    <header>
+    <nav>
+        <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
+
+        <div class="account-menu">
+            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
+            <div class="dropdown">
+                <p class="dropdown-name">{{ user.username }}</p>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="#">Order History</a>
+                <a href="#">Transaction History</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+    <main>
+  <section id="product-detail">
+    <div class="detail-image">
+      <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    </div>
+
+    <div class="detail-info">
+      <h1>{{ product.name }}</h1>
+      <p class="detail-price">{{ product.price }} NGN</p>
+      <p class="detail-description">{{ product.description }}</p>
+
+      <form action="{%url 'add_to_cart'%}" method="post">
+        {% csrf_token %}
+      {% if variants %}
+        <label for="variant">Choose size and color</label>
+        <select name="variant" id="variant">
+          {% for variant in variants %}
+            <option value="{{ variant.pk }}" {% if variant.stock == 0 %}disabled{% endif %}>
+              Size {{ variant.size }} - {{ variant.color }}
+              {% if variant.stock == 0 %}
+                (Out of stock{% if variant.available_date %}, back {{ variant.available_date|date:"j M Y" }}{% endif %})
+              {% else %}
+                ({{ variant.stock }} left)
+              {% endif %}
+            </option>
+          {% endfor %}
+        </select>
+      {% else %}
+        <p>Currently unavailable</p>
+      {% endif %}
+
+      {% if in_stock %}
+      <div class="detail-buttons">
+        <button type="submit" class="btn-cart">Add to Cart</button>
+        <button type="button" class="btn-pay">Pay Now</button>
+      </div>
+      </form>
+      {% endif %}
+
+
+      <a href="{% url 'shop' %}" class="back-link">← Back to Shop</a>
+    </div>
+  </section>
+
+    </main>
+
+    <footer>
+        &copy; 2026 Deboss Footwear. All rights reserved.
+    </footer>
+
+</body>
+</html>

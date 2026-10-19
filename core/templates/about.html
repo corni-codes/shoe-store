@@ -1,0 +1,123 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Custom</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+     <header>
+    <nav>
+        <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
+
+        <div class="account-menu">
+            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
+            <div class="dropdown">
+                <p class="dropdown-name">{{ user.username }}</p>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="#">Order History</a>
+                <a href="#">Transaction History</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+     <main>
+
+    <section id="about-intro">
+
+        <div class="about-text">
+
+            <h1>About Deboss Footwear</h1>
+
+            <p>
+                Deboss Footwear is a handcrafted footwear brand dedicated to creating
+                stylish, comfortable and quality shoes for every occasion.
+            </p>
+
+            <p>
+                From classic designs to custom-made requests, we focus on creating
+                footwear that reflects our customers' unique style.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section id="our-story">
+
+        <h2>Our Story</h2>
+
+        <p>
+            Established in 2017, Deboss Footwear started with a passion for creating
+            quality handmade shoes. Over the years, the brand has continued to grow
+            by providing customers with carefully crafted footwear designed with
+            attention to detail.
+        </p>
+
+        <p>
+            Located at Kalma Street, Federal Housing, Gonin Gora, Kaduna,
+            Deboss Footwear creates different types of shoes including boots,
+            cover shoes, sneakers, slippers, belts and custom designs.
+        </p>
+
+    </section>
+
+
+    <section id="our-values">
+
+        <h2>What Makes Us Different</h2>
+
+        <div class="values-container">
+
+            <div class="value-card">
+                <h3>Handcrafted Quality</h3>
+                <p>
+                    Every shoe is carefully made with attention to detail and quality.
+                </p>
+            </div>
+
+
+            <div class="value-card">
+                <h3>Custom Designs</h3>
+                <p>
+                    We bring customers' ideas to life through personalised footwear.
+                </p>
+            </div>
+
+
+            <div class="value-card">
+                <h3>Customer Satisfaction</h3>
+                <p>
+                    Our goal is to provide shoes that combine comfort, style and durability.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+    <footer>
+        <p>&copy; 2026 Deboss Footwear. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

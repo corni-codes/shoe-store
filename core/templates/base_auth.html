@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Deboss Footwear{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+</head>
+<body>
+
+    <div class="auth-wrapper">
+
+        <!-- LEFT: Brand panel -->
+        <div class="auth-brand">
+            <div class="brand-overlay"></div>
+            <div class="brand-content">
+                <div class="brand-logo">DEBOSS</div>
+                <div class="brand-logo-sub">FOOTWEAR</div>
+                <p class="brand-tagline">Step into something made for you.</p>
+            </div>
+        </div>
+
+        <!-- RIGHT: Form panel -->
+        <div class="auth-form-panel">
+            <div class="auth-form-box">
+                {% block form_content %}{% endblock %}
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

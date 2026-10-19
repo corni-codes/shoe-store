@@ -1,0 +1,120 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Home</title>
+   
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+
+<body>         
+
+   <header>
+    <nav>
+        <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
+
+        <div class="account-menu">
+            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
+            <div class="dropdown">
+                <p class="dropdown-name">{{ user.username }}</p>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="#">Order History</a>
+                <a href="#">Transaction History</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+    <main>
+
+        <section id="hero">
+
+            <div>
+                <h1>Handcrafted shoes made for you</h1>
+
+                <p>
+                    Handcrafted shoes made with quality, style, and comfort.
+                    Discover unique footwear designed for every occasion.
+                </p>
+
+                <button><a href="{% url 'shop'%}">Order Now</a></button>
+            </div>
+
+            <img src="{% static 'img/leather_boot-removebg-preview.png'%}" alt="leather boot">
+
+        </section>
+
+
+        <section id="featured">
+
+            <h2>Featured Collection</h2>
+            
+
+            <div class="shoe-container">
+                {% for product in featured_product  %}
+                    <div class="shoe-card">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.price }} NGN</p>
+                        <p>{{ product.description | truncatechars:20 }}</p>
+                        <button><a href="{% url 'product_detail' product.pk %}">View In Shop</a></button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
+
+           
+
+        <section id="why">
+
+            <h2>Why Choose Us?</h2>
+
+            <ul>
+                <li>Custom designs</li>
+                <li>Handcrafted</li>
+                <li>Quality materials</li>
+                <li>Affordable options</li>
+            </ul>
+
+        </section>
+
+
+        <section id="custom">
+
+            <h2>Custom Order Preview</h2>
+
+            <p>
+                Have a design in mind? Deboss Footwear can create custom
+                shoes based on your preferred style and requirements.
+            </p>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+        &copy; 2026 Deboss Footwear. All rights reserved.
+    </footer>
+
+
+</body>
+</html>

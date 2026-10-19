@@ -1,0 +1,96 @@
+{% extends 'base_auth.html' %}
+
+{% block title %}Sign Up | Deboss Footwear{% endblock %}
+
+{% block form_content %}
+
+    <h1 class="form-title">Create Account</h1>
+    <p class="form-subtitle">Join Deboss Footwear today</p>
+
+    {% if form.non_field_errors %}
+        <div class="form-error-box">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'signup' %}">
+        {% csrf_token %}
+
+        <div class="form-row">
+            <div class="input-group">
+                <label for="id_first_name">First Name</label>
+                <input type="text" name="first_name" id="id_first_name"
+                       value="{{ form.first_name.value|default:'' }}"
+                       placeholder="e.g. Ade" required>
+                {% if form.first_name.errors %}
+                    <span class="field-error">{{ form.first_name.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="input-group">
+                <label for="id_last_name">Last Name</label>
+                <input type="text" name="last_name" id="id_last_name"
+                       value="{{ form.last_name.value|default:'' }}"
+                       placeholder="e.g. Bello" required>
+                {% if form.last_name.errors %}
+                    <span class="field-error">{{ form.last_name.errors.0 }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="id_username">Username</label>
+            <input type="text" name="username" id="id_username"
+                   value="{{ form.username.value|default:'' }}"
+                   placeholder="Choose a username" required>
+            {% if form.username.errors %}
+                <span class="field-error">{{ form.username.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+        <div class="input-group">
+            <label for="id_email">Email</label>
+            <input type="email" name="email" id="id_email"
+                   value="{{ form.email.value|default:'' }}"
+                   placeholder="you@example.com" required>
+            {% if form.email.errors %}
+                <span class="field-error">{{ form.email.errors.0 }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="input-group">
+            <label for="id_phone_number">Phone Number</label>
+            <input type="tel" name="phone_number" id="id_phone_number"
+                   value="{{ form.phone_number.value|default:'' }}"
+                   placeholder="format: 080XXXXXXXX" required>
+            {% if form.phone_number.errors %}
+                <span class="field-error">{{ form.phone_number.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+        <div class="input-group">
+            <label for="id_password1">Password</label>
+            <input type="password" name="password1" id="id_password1"
+                   placeholder="Create a password" required>
+            {% if form.password1.errors %}
+                <span class="field-error">{{ form.password1.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+        <div class="input-group">
+            <label for="id_password2">Confirm Password</label>
+            <input type="password" name="password2" id="id_password2"
+                   placeholder="Re-enter your password" required>
+            {% if form.password2.errors %}
+                <span class="field-error">{{ form.password2.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="auth-submit-btn">Create Account</button>
+    </form>
+
+    <p class="switch-auth">Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+
+{% endblock %}

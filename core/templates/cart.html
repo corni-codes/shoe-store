@@ -1,0 +1,72 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Shop</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+
+<body>
+  <header>
+    <nav>
+        <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
+
+        <div class="account-menu">
+            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
+            <div class="dropdown">
+                <p class="dropdown-name">{{ user.username }}</p>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="#">Order History</a>
+                <a href="#">Transaction History</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+    <main>
+  <section id="cart">
+    <h1>Your Cart</h1>
+
+    {% for item in items %}
+      <div class="cart-row">
+        <img src="{{ item.variant.product.image.url }}" alt="{{ item.variant.product.name }}">
+        <div class="cart-info">
+          <h3>{{ item.variant.product.name }}</h3>
+          <p>Size {{ item.variant.size }} - {{ item.variant.color }}</p>
+          <p>{{ item.variant.product.price }} NGN</p>
+          <p>Quantity: {{ item.quantity }}</p>
+          <p>Subtotal: {{ item.line_total }} NGN</p>
+        </div>
+      </div>
+    {% empty %}
+      <p>Your cart is empty.</p>
+      <a href="{% url 'shop' %}">Go to Shop</a>
+    {% endfor %}
+    <h2>Total: {{ total }} NGN</h2>
+  </section>
+
+
+    </main>
+
+    <footer>
+        &copy; 2026 Deboss Footwear. All rights reserved.
+    </footer>
+
+</body>
+</html>

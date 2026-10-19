@@ -1,0 +1,97 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Custom</title>
+
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+<body>
+   <header>
+    <nav>
+        <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
+
+        <div class="account-menu">
+            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
+            <div class="dropdown">
+                <p class="dropdown-name">{{ user.username }}</p>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="#">Order History</a>
+                <a href="#">Transaction History</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+    <main>
+        <section id="section-hero">
+            <h1>Create Your Custom Shoe</h1>
+            <p>Have a unique or different design in mind? Tell us your idea and we will create a shoe that matches your style. </p>
+        
+
+        </section>
+
+        <section id="order-form">
+            <form action="user_details">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter full name"> 
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter a valid email"> 
+
+                <label for="phone">Whatsapp number</label>
+                <input type="tel" id="phone" placeholder="Enter Whatsapp number">
+
+                <label for="categorie">Category</label>
+            <select name="category" id="categorie">
+                <option value="boot">boots</option> 
+                <option value="cover shoe">cover shoes</option> 
+                <option value="slipper">slippers</option> 
+                <option value="sneaker">sneakers</option> 
+                <option value="belt">belts</option>
+            </select>
+
+            <label for="color">Preferred color</label>
+            <input type="text" id="color" placeholder="color">
+
+            <label for="descriptions">Describe your design</label>
+            <textarea name="description" id="descriptions" placeholder="enter shoe description or additional information"></textarea>
+            
+
+            <label for="unit">Quantity</label>
+            <input type="text" id="unit" placeholder="how many unit?">
+            
+            <button type="submit">submit</button>
+
+            </form>
+
+            
+
+
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; 2026 Deboss Footwear. All rights reserved.
+    </footer>
+
+
+ 
+
+    
+</body>
+</html>

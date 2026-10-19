@@ -1,0 +1,79 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Shop</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+
+<body>
+<header>
+    <nav>
+        <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
+
+        <div class="account-menu">
+            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
+            <div class="dropdown">
+                <p class="dropdown-name">{{ user.username }}</p>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="#">Order History</a>
+                <a href="#">Transaction History</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+
+        <section id="categories">
+            <h1>Find Your Perfect Pair</h1>
+            <h2>Categories:</h2>
+        
+        <ul>
+            <li><a href="/shop">All</a></li>
+              {% for category in categories %}
+        <li><a href="/products/{{category.name}}">{{category.name}}</a></li>
+        {% endfor %}
+        </ul>
+       
+        </section>
+
+        <section id="products">
+            <h2>Our Collection</h2>
+
+            <div class="shoe-container">
+                {% for product in products %}
+                    <div class="shoe-card" data-category="{{ product.category }}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.price }} NGN</p>
+                        <p>{{ product.description|truncatechars:20 }}</p>
+                        <button><a href="{% url 'product_detail' product.pk %}">View Details</a></button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; 2026 Deboss Footwear. All rights reserved.
+    </footer>
+
+</body>
+</html>

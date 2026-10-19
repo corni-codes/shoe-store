@@ -1,0 +1,138 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Custom</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+<body>
+    <header>
+    <nav>
+        <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
+
+        <div class="account-menu">
+            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
+            <div class="dropdown">
+                <p class="dropdown-name">{{ user.username }}</p>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="#">Order History</a>
+                <a href="#">Transaction History</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <section id="contact-intro">
+
+        <h1>Get In Touch / Support</h1>
+
+        <p>
+            Have questions about our shoes or need more information?
+            Contact Deboss Footwear and we will be happy to assist you.
+        </p>
+
+    </section>
+
+
+    <section id="contact-section">
+
+        <div class="contact-info">
+
+            <h2>Contact Information</h2>
+
+            <div class="info-item">
+                <span class="info-icon "></span>
+                <div>
+                    <strong>Phone</strong>
+                    <p>09066654193</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon"></span>
+                <div>
+                    <strong>WhatsApp</strong>
+                    <p>09019279152</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <span class="info-icon"></span>
+                <div>
+                    <strong>Email</strong>
+                    <p>debossfootwear@gmail.com</p>
+                </div>
+
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon"></span>
+                <div>
+                    <strong>Location</strong>
+                    <p>
+                        Kalma Street,<br>
+                        Federal Housing,<br>
+                        Gonin Gora, Kaduna
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="contact-form">
+
+            <h2>Send Us A Message</h2>
+
+            <form>
+
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Your name">
+
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Your email">
+
+
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Write your message"></textarea>
+
+
+                <button type="submit">Send Message</button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+        &copy; 2026 Deboss Footwear. All rights reserved.
+    </footer>
+
+
+
+
+
+</body>
+</html>
+
+    
