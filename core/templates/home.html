@@ -1,4 +1,4 @@
- {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,17 +16,34 @@
         <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
 
         <div class="account-menu">
-            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
-            <div class="dropdown">
-                <p class="dropdown-name">{{ user.username }}</p>
-                <a href="{% url 'cart' %}">Cart</a>
-                <a href="#">Order History</a>
-                <a href="#">Transaction History</a>
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
-            </div>
+            <button type="button"
+                    class="account-toggle"
+                    aria-label="Open account menu"
+                    aria-expanded="false">
+                {{ user.username|first|upper }}
+            </button>
+
+            <div class="account-overlay"></div>
+
+            <aside class="account-panel" aria-hidden="true">
+                <div class="account-panel-header">
+                    <p class="dropdown-name">{{ user.username }}</p>
+                    <button type="button" class="account-close" aria-label="Close account menu">
+                        &times;
+                    </button>
+                </div>
+
+                <div class="account-links" aria-label="Account navigation">
+                    <a href="{% url 'cart' %}">Cart</a>
+                    <a href="#">Order History</a>
+                    <a href="#">Transaction History</a>
+
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">Logout</button>
+                    </form>
+                </div>
+            </aside>
         </div>
 
         <ul>
@@ -79,9 +96,6 @@
         </section>
 
 
-
-           
-
         <section id="why">
 
             <h2>Why Choose Us?</h2>
@@ -116,5 +130,6 @@
     </footer>
 
 
+    <script src="{% static 'account-menu.js' %}"></script>
 </body>
 </html>

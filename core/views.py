@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category, ProductVariant, CartItem
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 
 # Create your views here.
@@ -30,17 +32,37 @@ def product_detail(request, pk):
     return render(request, 'product_detail.html', {'product': product, 'variants': variants, 'in_stock': in_stock})
 
 @login_required
+@require_POST
 def add_to_cart(request):
-    variant_id= request.POST.get('variant')
-    variant= get_object_or_404(ProductVariant, pk=variant_id)
-    if variant.stock == 0:
-        return redirect('product_detail',pk=variant.product.pk)
-    cart_item, created= CartItem.objects.get_or_create(user= request.user, variant=variant)
+    variant_id = request.POST.get('variant')
+    variant = get_object_or_404(ProductVariant, pk=variant_id)
+
+    if variant.stock <= 0:
+        return JsonResponse({
+            'success': False,
+            'message': 'This variant is out of stock.'
+        }, status=400)
+
+    cart_item, created = CartItem.objects.get_or_create(
+        user=request.user,
+        variant=variant
+    )
+
     if not created:
         if cart_item.quantity < variant.stock:
             cart_item.quantity += 1
             cart_item.save()
-    return redirect('cart')
+        else:
+            return JsonResponse({
+                'success': False,
+                'message': 'You have reached the available stock limit.'
+            }, status=400)
+
+    return JsonResponse({
+        'success': True,
+        'message': 'Added to cart!',
+        'cart_quantity': cart_item.quantity
+    })
 
 
 

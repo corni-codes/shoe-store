@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deboss Footwear | Shop</title>
+    <title>Deboss Footwear | Product Detail</title>
     
     <link rel="stylesheet" href="{% static 'style.css'%}">
 </head>
@@ -16,17 +16,34 @@
         <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
 
         <div class="account-menu">
-            <button type="button" class="account-toggle">{{ user.username|first|upper }}</button>
-            <div class="dropdown">
-                <p class="dropdown-name">{{ user.username }}</p>
-                <a href="{% url 'cart' %}">Cart</a>
-                <a href="#">Order History</a>
-                <a href="#">Transaction History</a>
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
-            </div>
+            <button type="button"
+                    class="account-toggle"
+                    aria-label="Open account menu"
+                    aria-expanded="false">
+                {{ user.username|first|upper }}
+            </button>
+
+            <div class="account-overlay"></div>
+
+            <aside class="account-panel" aria-hidden="true">
+                <div class="account-panel-header">
+                    <p class="dropdown-name">{{ user.username }}</p>
+                    <button type="button" class="account-close" aria-label="Close account menu">
+                        &times;
+                    </button>
+                </div>
+
+                <div class="account-links" aria-label="Account navigation">
+                    <a href="{% url 'cart' %}">Cart</a>
+                    <a href="#">Order History</a>
+                    <a href="#">Transaction History</a>
+
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">Logout</button>
+                    </form>
+                </div>
+            </aside>
         </div>
 
         <ul>
@@ -39,7 +56,6 @@
     </nav>
 </header>
 
-
     <main>
   <section id="product-detail">
     <div class="detail-image">
@@ -51,7 +67,7 @@
       <p class="detail-price">{{ product.price }} NGN</p>
       <p class="detail-description">{{ product.description }}</p>
 
-      <form action="{%url 'add_to_cart'%}" method="post">
+      <form id="add-to-cart-form" action="{%url 'add_to_cart'%}" method="post">
         {% csrf_token %}
       {% if variants %}
         <label for="variant">Choose size and color</label>
@@ -73,12 +89,12 @@
 
       {% if in_stock %}
       <div class="detail-buttons">
-        <button type="submit" class="btn-cart">Add to Cart</button>
+        <button type="submit" class="btn-cart" id="add-to-cart-btn">Add to Cart</button>
         <button type="button" class="btn-pay">Pay Now</button>
       </div>
-      </form>
+     
       {% endif %}
-
+       </form>
 
       <a href="{% url 'shop' %}" class="back-link">← Back to Shop</a>
     </div>
@@ -90,5 +106,7 @@
         &copy; 2026 Deboss Footwear. All rights reserved.
     </footer>
 
+    <script src="{% static 'cart.js' %}"></script>
+    <script src="{% static 'account-menu.js' %}"></script>
 </body>
 </html>
