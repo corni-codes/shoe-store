@@ -4,6 +4,10 @@ A Django-powered e-commerce platform for footwear and fashion accessories, inclu
 
 The Delivery allows customers to browse products, explore categories, view product details, manage their shopping carts, and place orders online using Pay on Delivery..
 
+## Homepage Preview
+
+![Deboss Footwear Homepage](homepage.jpg)
+
 ## Technology Stack:
 - **Backend:** Python, Django
 - **Database:** PostgreSQL
