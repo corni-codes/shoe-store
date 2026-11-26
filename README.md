@@ -17,7 +17,7 @@ The platform allows customers to browse products, explore categories, view produ
 
 - **Backend:** Python, Django
 - **Database:** PostgreSQL
-- **Frontend:** HTML, CSS, JavaScript, Bootstrap
+- **Frontend:** HTML, CSS, JavaScript
 - **Deployment:** Render
 - **Database Hosting:** Neon
 
