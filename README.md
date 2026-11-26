@@ -40,15 +40,39 @@ Deboss Footwear follows Django's Model-Template-View (MTV) architecture.
 - **Templates:** Render the user interface using Django templates.
 - **Database:** PostgreSQL stores the application's persistent data.
 
+
 ## Local Setup
 
-1. Clone the repository:
+### 1. Clone the Repository
 
-   ```bash
-   git clone https://github.com/corni-codes/shoe-store.git
+```bash
+git clone https://github.com/corni-codes/shoe-store.git
+cd shoe-store
+```
 
-## Deployment
-The application is deployed on Render, with Neon PostgreSQL providing the production database.
+### 2. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env` file in the project root and add:
+
+```env
+SECRET_KEY=your-generated-secret-key
+DEBUG=True
+```
+
+Generate your own Django secret key. Do not use production credentials.
+
+### 4. Apply Deployment Migrations
+
+```bash
+python manage.py migrate
+
+DeploymentPostgreSQL providing the production database.
 
 ## Project Status
 **Status:** Live
