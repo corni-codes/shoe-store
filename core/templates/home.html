@@ -5,16 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deboss Footwear | Home</title>
-   
-    <link rel="stylesheet" href="{% static 'style.css'%}">
+
+    <link rel="stylesheet" href="{% static 'style.css'%}?v=3">
 </head>
 
-<body>         
+<body>
 
-   <header>
+<header>
     <nav>
         <div class="logo"><a href="{% url 'home' %}">Deboss Footwear</a></div>
 
+        {% if user.is_authenticated %}
         <div class="account-menu">
             <button type="button"
                     class="account-toggle"
@@ -28,15 +29,13 @@
             <aside class="account-panel" aria-hidden="true">
                 <div class="account-panel-header">
                     <p class="dropdown-name">{{ user.username }}</p>
-                    <button type="button" class="account-close" aria-label="Close account menu">
-                        &times;
-                    </button>
+                    <button type="button" class="account-close" aria-label="Close account menu">&times;</button>
                 </div>
 
                 <div class="account-links" aria-label="Account navigation">
                     <a href="{% url 'cart' %}">Cart</a>
-                    <a href="#">Order History</a>
-                    <a href="#">Transaction History</a>
+                    <a href="{% url 'order_history' %}">Order History</a>
+  
 
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
@@ -45,6 +44,11 @@
                 </div>
             </aside>
         </div>
+        {% else %}
+        <div class="account-menu">
+            <a href="{% url 'login' %}" class="login-link">Login</a>
+        </div>
+        {% endif %}
 
         <ul>
             <li><a href="{% url 'home' %}">Home</a></li>
@@ -57,79 +61,146 @@
 </header>
 
 
-    <main>
+<main>
 
-        <section id="hero">
-
-            <div>
-                <h1>Handcrafted shoes made for you</h1>
-
-                <p>
-                    Handcrafted shoes made with quality, style, and comfort.
-                    Discover unique footwear designed for every occasion.
-                </p>
-
-                <button><a href="{% url 'shop'%}">Order Now</a></button>
-            </div>
-
-            <img src="{% static 'img/leather_boot-removebg-preview.png'%}" alt="leather boot">
-
-        </section>
-
-
-        <section id="featured">
-
-            <h2>Featured Collection</h2>
-            
-
-            <div class="shoe-container">
-                {% for product in featured_product  %}
-                    <div class="shoe-card">
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                        <h3>{{ product.name }}</h3>
-                        <p>{{ product.price }} NGN</p>
-                        <p>{{ product.description | truncatechars:20 }}</p>
-                        <button><a href="{% url 'product_detail' product.pk %}">View In Shop</a></button>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
-
-
-        <section id="why">
-
-            <h2>Why Choose Us?</h2>
-
-            <ul>
-                <li>Custom designs</li>
-                <li>Handcrafted</li>
-                <li>Quality materials</li>
-                <li>Affordable options</li>
-            </ul>
-
-        </section>
-
-
-        <section id="custom">
-
-            <h2>Custom Order Preview</h2>
+    <!-- HERO -->
+    <section id="hero">
+        <div>
+            <h1>Step into handcrafted comfort</h1>
 
             <p>
-                Have a design in mind? Deboss Footwear can create custom
-                shoes based on your preferred style and requirements.
+                Every pair is made by hand with quality materials, built around
+                your style and your fit. Pick from our collection or design your own.
             </p>
 
-        </section>
+            <div class="hero-buttons">
+                <a href="{% url 'shop' %}" class="btn btn-gold">Shop Now</a>
+                <a href="{% url 'custom' %}" class="btn btn-outline">Order Custom</a>
+            </div>
+        </div>
+
+        <img src="{% static 'img/leather_boot-removebg-preview.png'%}" alt="Handcrafted leather boot">
+    </section>
 
 
-    </main>
+  
+    <section id="info-strip">
+        <div class="strip-item">
+            <strong>Delivery</strong>
+            <span>inter-state delivery in Nigeria</span>
+        </div>
+        <div class="strip-item">
+            <strong>Payment</strong>
+            <span>Bank transfer or card</span>
+        </div>
+        <div class="strip-item">
+            <strong>Made to order</strong>
+            <span>Custom sizes and designs</span>
+        </div>
+    </section>
 
 
-    <footer>
-        &copy; 2026 Deboss Footwear. All rights reserved.
-    </footer>
+    <!-- FEATURED -->
+    <section id="featured">
+        <h2>Featured Collection</h2>
+
+        <div class="shoe-container">
+            {% for product in featured_product %}
+                <div class="shoe-card">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.price|floatformat:0 }} NGN</p>
+                    <p>{{ product.description|truncatechars:20 }}</p>
+                    <a href="{% url 'product_detail' product.pk %}" class="btn btn-dark btn-small">View In Shop</a>
+                </div>
+            {% empty %}
+                <p class="empty-note">New shoes are coming soon. Check back shortly.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section-cta">
+            <a href="{% url 'shop' %}" class="btn btn-dark">See All Shoes</a>
+        </div>
+    </section>
 
 
-    <script src="{% static 'account-menu.js' %}"></script>
+    <!-- WHY -->
+    <section id="why">
+        <h2>Why Choose Us?</h2>
+
+        <ul>
+            <li>
+                Custom designs
+                <span>Tell us what you have in mind and we build it.</span>
+            </li>
+            <li>
+                Handcrafted
+                <span>Each pair is made by hand, not by a factory line.</span>
+            </li>
+            <li>
+                Quality materials
+                <span>Good leather and sturdy soles that last.</span>
+            </li>
+            <li>
+                Affordable options
+                <span>Fair prices for every budget.</span>
+            </li>
+        </ul>
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section id="how">
+        <h2>How Custom Orders Work</h2>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Choose a style</h3>
+                <p>Pick a design from the shop or describe your own.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Send your details</h3>
+                <p>Share your size, colour and any special requests.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>We handcraft it</h3>
+                <p>Your pair is made to order in our workshop.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h3>Get it delivered</h3>
+                <p>We send it to your address.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CUSTOM -->
+    <section id="custom">
+        <h2>Custom Order</h2>
+
+        <p>
+            Have a design in mind? Deboss Footwear can create custom
+            shoes based on your preferred style and requirements.
+        </p>
+
+        <div class="section-cta">
+            <a href="{% url 'custom' %}" class="btn btn-gold">Start Your Custom Order</a>
+        </div>
+    </section>
+
+</main>
+
+
+<footer>
+    &copy; 2026 Deboss Footwear. All rights reserved.
+</footer>
+
+<a href="https://wa.me/2349019279152" class="whatsapp-float" target="_blank" rel="noopener">Chat with us</a>
+
+<script src="{% static 'account-menu.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Checkout</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=2">
+</head>
+
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}">Deboss Footwear</a>
+        </div>
+
+        <div class="account-menu">
+            <button type="button"
+                    class="account-toggle"
+                    aria-label="Open account menu"
+                    aria-expanded="false">
+                {{ user.username|first|upper }}
+            </button>
+
+            <div class="account-overlay"></div>
+
+            <aside class="account-panel" aria-hidden="true">
+                <div class="account-panel-header">
+                    <p class="dropdown-name">{{ user.username }}</p>
+                    <button type="button" class="account-close" aria-label="Close account menu">
+                        &times;
+                    </button>
+                </div>
+
+                <div class="account-links" aria-label="Account navigation">
+                    <a href="{% url 'cart' %}">Cart</a>
+                    <a href="{% url 'order_history' %}">Order History</a>
+                
+
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">Logout</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section id="checkout">
+        <h1>Checkout</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="cart-message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" class="checkout-layout">
+            {% csrf_token %}
+
+            <!-- LEFT: delivery + payment -->
+            <div class="checkout-main">
+
+                {% if form.non_field_errors %}
+                    <div class="error-message">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="checkout-card">
+                    <h2>Delivery Information</h2>
+
+                    <div class="form-group">
+                        <label for="{{ form.full_name.id_for_label }}">Full Name</label>
+                        {{ form.full_name }}
+                        {{ form.full_name.errors }}
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ form.phone_number.id_for_label }}">Phone Number</label>
+                            {{ form.phone_number }}
+                            {{ form.phone_number.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.address.id_for_label }}">Delivery Address</label>
+                        {{ form.address }}
+                        {{ form.address.errors }}
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ form.city.id_for_label }}">City</label>
+                            {{ form.city }}
+                            {{ form.city.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.state.id_for_label }}">State</label>
+                            {{ form.state }}
+                            {{ form.state.errors }}
+                        </div>
+                    </div>
+                </div>
+
+            
+            </div>
+
+            <!-- RIGHT: order summary -->
+            <aside class="checkout-summary">
+                <h2>Order Summary</h2>
+
+                {% for item in cart_items %}
+                    <div class="checkout-item">
+                        <div>
+                            <h3>{{ item.variant.product.name }}</h3>
+                            <p>Size {{ item.variant.size }} - {{ item.variant.color }}</p>
+                            <p>Qty: {{ item.quantity }}</p>
+                        </div>
+                        <strong>{{ item.line_total|floatformat:0 }} NGN</strong>
+                    </div>
+                {% endfor %}
+
+                <div class="summary-line summary-total">
+                    <span>Total</span>
+                    <span>{{ total|floatformat:0 }} NGN</span>
+                </div>
+
+                <button type="submit" class="checkout-btn">Place Order</button>
+                <a href="{% url 'cart' %}" class="summary-link">Back to cart</a>
+            </aside>
+
+        </form>
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 Deboss Footwear. All rights reserved.
+</footer>
+
+<script src="{% static 'account-menu.js' %}"></script>
+</body>
+</html>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deboss Footwear | Product Detail</title>
     
-    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <link rel="stylesheet" href="{% static 'style.css'%}?v=2">
 </head>
 
 <body>
@@ -35,8 +35,8 @@
 
                 <div class="account-links" aria-label="Account navigation">
                     <a href="{% url 'cart' %}">Cart</a>
-                    <a href="#">Order History</a>
-                    <a href="#">Transaction History</a>
+                    <a href="{% url 'order_history' %}">Order History</a>
+                
 
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
@@ -90,7 +90,11 @@
       {% if in_stock %}
       <div class="detail-buttons">
         <button type="submit" class="btn-cart" id="add-to-cart-btn">Add to Cart</button>
-        <button type="button" class="btn-pay">Pay Now</button>
+        <button type="submit" class="btn-pay"
+        formaction="{% url 'direct_checkout' %}"
+        formmethod="post">
+    Order Now
+</button>
       </div>
      
       {% endif %}

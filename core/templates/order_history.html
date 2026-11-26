@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Order History</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=3">
+</head>
+
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}">Deboss Footwear</a>
+        </div>
+
+        <div class="account-menu">
+            <button type="button"
+                    class="account-toggle"
+                    aria-label="Open account menu"
+                    aria-expanded="false">
+                {{ user.username|first|upper }}
+            </button>
+
+            <div class="account-overlay"></div>
+
+            <aside class="account-panel" aria-hidden="true">
+                <div class="account-panel-header">
+                    <p class="dropdown-name">{{ user.username }}</p>
+                    <button type="button" class="account-close" aria-label="Close account menu">
+                        &times;
+                    </button>
+                </div>
+
+                <div class="account-links">
+                    <a href="{% url 'cart' %}">Cart</a>
+                    <a href="{% url 'order_history' %}">Order History</a>
+                  
+
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">Logout</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+    <section id="order-history">
+        <div class="order-history-header">
+            <h1>My Orders</h1>
+            <p>Track and manage your purchases.</p>
+        </div>
+
+        {% if orders %}
+            <div class="order-list">
+                {% for order in orders %}
+                    <div class="order-row">
+                        <div class="order-main">
+                            <h2>{{ order.order_number }}</h2>
+                            <p>{{ order.created_at|date:"d M Y" }}</p>
+                        </div>
+
+                        <div class="order-info">
+                            <div>
+                                <span>Total Amount</span>
+                                <strong>{{ order.total_amount|floatformat:0 }} NGN</strong>
+                            </div>
+
+                            <div>
+                                <span>Payment</span>
+                                <strong>{{ order.get_payment_status_display }}</strong>
+                            </div>
+
+                            <div>
+                                <span>Order Status</span>
+                                <strong class="order-status status-{{ order.status }}">
+                                    {{ order.get_status_display }}
+                                </strong>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'order_detail' order.order_number %}"
+                           class="order-view-link">
+                            View Details →
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="order-empty">
+                <h2>No orders yet</h2>
+                <p>You haven't placed any orders yet.</p>
+                <a href="{% url 'shop' %}" class="checkout-btn">
+                    Explore Products
+                </a>
+            </div>
+        {% endif %}
+    </section>
+    </main>
+
+<footer>
+    &copy; 2026 Deboss Footwear. All rights reserved.
+</footer>
+
+<script src="{% static 'account-menu.js' %}"></script>
+</body>
+</html>

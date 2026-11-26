@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Order Details</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=2">
+</head>
+
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}">Deboss Footwear</a>
+        </div>
+
+        <div class="account-menu">
+            <button type="button"
+                    class="account-toggle"
+                    aria-label="Open account menu"
+                    aria-expanded="false">
+                {{ user.username|first|upper }}
+            </button>
+
+            <div class="account-overlay"></div>
+
+            <aside class="account-panel" aria-hidden="true">
+                <div class="account-panel-header">
+                    <p class="dropdown-name">{{ user.username }}</p>
+                    <button type="button" class="account-close" aria-label="Close account menu">
+                        &times;
+                    </button>
+                </div>
+
+                <div class="account-links">
+                    <a href="{% url 'cart' %}">Cart</a>
+                    <a href="{% url 'order_history' %}">Order History</a>
+                   
+
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">Logout</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+    <section id="order-detail">
+
+        <div class="order-detail-header">
+            <h1>Order Details</h1>
+            <a href="{% url 'order_history' %}" class="order-back-link">
+                ← Back to My Orders
+            </a>
+        </div>
+
+        <section class="detail-section">
+            <div class="detail-section-heading">
+                <h2>Order Summary</h2>
+                <span class="detail-status status-{{ order.status }}">
+                    {{ order.get_status_display }}
+                </span>
+            </div>
+
+            <div class="detail-grid">
+                <div>
+                    <span>Order Number</span>
+                    <strong>{{ order.order_number }}</strong>
+                </div>
+
+                <div>
+                    <span>Order Date</span>
+                    <strong>{{ order.created_at|date:"d M Y, h:i A" }}</strong>
+                </div>
+
+                <div>
+                    <span>Payment Method</span>
+                    <strong>{{ order.get_payment_method_display }}</strong>
+                </div>
+
+                <div>
+                    <span>Payment Status</span>
+                    <strong>{{ order.get_payment_status_display }}</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="detail-section">
+            <h2>Delivery Information</h2>
+
+            <div class="delivery-details">
+                <p><strong>{{ order.full_name }}</strong></p>
+                <p>{{ order.phone_number }}</p>
+                <p>{{ order.email }}</p>
+                <p>{{ order.address }}</p>
+                <p>{{ order.city }}, {{ order.state }}</p>
+            </div>
+        </section>
+
+        <section class="detail-section">
+            <h2>Products Ordered</h2>
+
+            <div class="ordered-products">
+                {% for item in order.items.all %}
+                    <div class="ordered-product">
+                        <div class="ordered-product-info">
+                            <h3>{{ item.product_name }}</h3>
+                            <p>Size: {{ item.size }}</p>
+                            <p>Colour: {{ item.color }}</p>
+                            <p>Quantity: {{ item.quantity }}</p>
+                            <p>Unit Price: {{ item.unit_price|floatformat:0 }} NGN</p>
+                        </div>
+
+                        <strong class="ordered-product-total">
+                            {{ item.line_total|floatformat:0 }} NGN
+                        </strong>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="order-detail-total">
+                <span>Order Total</span>
+                <strong>{{ order.total_amount|floatformat:0 }} NGN</strong>
+            </div>
+        </section>
+
+    </section>
+    </main>
+
+<footer>
+    &copy; 2026 Deboss Footwear. All rights reserved.
+</footer>
+
+<script src="{% static 'account-menu.js' %}"></script>
+</body>
+</html>

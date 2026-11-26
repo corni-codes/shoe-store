@@ -50,8 +50,110 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-    
 
+class Order(models.Model):
+
+    ORDER_STATUS = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('processing', 'Processing'),
+        ('shipped', 'Shipped'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    PAYMENT_METHODS = [
+        ('pay_on_delivery', 'Pay on Delivery'),
+    ]
+
+    PAYMENT_STATUS = [
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
+        ('failed', 'Failed'),
+        ('refunded', 'Refunded'),
+    ]
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='orders'
+    )
+
+    order_number = models.CharField(max_length=30, unique=True)
+
+    full_name = models.CharField(max_length=150)
+    phone_number = models.CharField(max_length=15)
+    email = models.EmailField()
+
+    address = models.TextField()
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+
+    total_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=ORDER_STATUS,
+        default='pending'
+    )
+
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHODS
+    )
+
+    payment_status = models.CharField(
+        max_length=20,
+        choices=PAYMENT_STATUS,
+        default='pending'
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.order_number
+    
+class OrderItem(models.Model):
+
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    variant = models.ForeignKey(
+        ProductVariant,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    product_name = models.CharField(max_length=150)
+    size = models.CharField(max_length=10)
+    color = models.CharField(max_length=30)
+
+    unit_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    quantity = models.PositiveIntegerField()
+
+    @property
+    def line_total(self):
+        return self.unit_price * self.quantity
+
+    def __str__(self):
+        return f"{self.product_name} - {self.order.order_number}"
 
 
 

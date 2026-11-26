@@ -22,7 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('fadshoe/', admin.site.urls),
     path('', signup_view, name='signup'),
     path('', include('core.urls')),
 

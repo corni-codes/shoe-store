@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deboss Footwear | Order Received</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=2">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}">Deboss Footwear</a>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'custom' %}">Custom Order</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="checkout-success">
+        <div class="success-card">
+            <div class="success-icon">&#10003;</div>
+
+            <h1>Order Received!</h1>
+            <p class="success-lead">
+                Thank you for shopping with Deboss Footwear. Your order has been recorded successfully.
+            </p>
+
+            <div class="order-details">
+                <div class="detail-row">
+                    <span>Order Number</span>
+                    <strong>{{ order.order_number }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Total Amount</span>
+                    <strong>{{ order.total_amount|floatformat:0 }} NGN</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Payment Method</span>
+                    <strong>{{ order.get_payment_method_display }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Payment Status</span>
+                    <strong>{{ order.get_payment_status_display }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Order Status</span>
+                    <strong>{{ order.get_status_display }}</strong>
+                </div>
+            </div>
+
+            <p class="payment-note">
+                {% if order.payment_method == 'pay_on_delivery' %}
+                    You will pay when your order is delivered.
+                {% else %}
+                    Your order is awaiting Paystack payment processing.
+                {% endif %}
+            </p>
+
+            <div class="success-actions">
+                <a href="{% url 'shop' %}" class="checkout-btn">Continue Shopping</a>
+                <a href="{% url 'home' %}" class="checkout-btn secondary">Back to Home</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 Deboss Footwear. All rights reserved.
+</footer>
+
+</body>
+</html>
