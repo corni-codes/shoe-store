@@ -10,7 +10,7 @@ The Delivery allows customers to browse products, explore categories, view produ
 
 ### Custom Order Enquiries
 
-![Deboss Footwear Custom Order](custom_ordee.jpg)
+![Deboss Footwear Custom Order](custom_order.jpg)
 
 ## Technology Stack:
 - **Backend:** Python, Django
