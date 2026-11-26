@@ -5,6 +5,8 @@ A Django-powered e-commerce platform for footwear and fashion accessories, inclu
 
 The platform allows customers to browse products, explore categories, view product details, manage their shopping carts, and place orders online using Pay on Delivery.
 
+🌐 **Live Demo:** https://deboss-footwear.onrender.com
+
 ## Homepage Preview
 
 ![Deboss Footwear Homepage](homepage.jpg)
@@ -17,22 +19,33 @@ The platform allows customers to browse products, explore categories, view produ
 
 - **Backend:** Python, Django
 - **Database:** PostgreSQL
-- **Frontend:** HTML, CSS, JavaScript
+- **Frontend:** HTML, CSS, JavaScript, Bootstrap
 - **Deployment:** Render
 - **Database Hosting:** Neon
 
 ## Features
 
+### Customer Features
+
 - Customer registration, login, and authentication
 - Product browsing and category filtering
 - Product details with size and variant selection
 - Shopping cart management
-- Inventory and stock management
 - Checkout with Pay on Delivery
 - Customer order history and order details
+
+### Order & Inventory Management
+
+- Inventory and stock management
 - Order status and payment status management
-- **Custom order enquiries through WhatsApp**
+
+### Communication
+
+- Custom order enquiries through WhatsApp
 - Direct WhatsApp communication for customer enquiries
+
+### Admin Features
+
 - Admin dashboard for managing products, inventory, and orders
 
 ## Architecture
@@ -102,9 +115,11 @@ Open `http://127.0.0.1:8000/` in your browser.
 
 The application is deployed on Render, with Neon PostgreSQL providing the production database.
 
+**Live URL:** https://deboss-footwear.onrender.com
+
 ## Project Status
 
-**Status:** Live
+**Status:** Live ✅
 
 The application is deployed and accessible online.
 
