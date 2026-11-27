@@ -1,7 +1,7 @@
 Django==5.2.1
 dj-database-url==3.1.2
 django-unfold==0.110.1
-django-cloudinary-storage==0.3.0
+django-cloudinary-storage==0.4.0
 cloudinary==1.47.0
 gunicorn==26.2.0
 whitenoise==6.12.0
