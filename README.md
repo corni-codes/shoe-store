@@ -2,17 +2,17 @@ Deboss Footwear
 
 A Django-powered e-commerce platform for footwear and fashion accessories, including shoes, belts, and more.
 
-The platform allows customers to browse products, explore categories, view product details, manage their shopping carts, and place orders online using Pay on Delivery.
+Deboss Footwear allows customers to browse products, explore categories, view product details, manage shopping carts, and place orders online using Pay on Delivery.
 
 🌐 Live Demo: https://deboss-footwear.onrender.com
 
 Screenshots
 
-Homepage
+Homepage Preview
 
 "Deboss Footwear Homepage" (homepage.jpg)
 
-Shop
+Shop Page
 
 "Deboss Footwear Shop" (shop.jpg)
 
@@ -22,7 +22,7 @@ Shopping Cart
 
 Order History
 
-"Deboss Footwear Orders" (order.jpg)
+"Deboss Footwear Order History" (order.jpg)
 
 Custom Order Enquiries
 
@@ -34,7 +34,7 @@ Technology Stack
 - Database: PostgreSQL
 - Frontend: HTML, CSS, JavaScript
 - Deployment: Render
-- Database Hosting: Neon
+- Database Hosting: Neon PostgreSQL
 - Media Storage: Cloudinary
 
 Features
@@ -48,10 +48,11 @@ Customer Features
 - Checkout with Pay on Delivery
 - Customer order history and order details
 
-Order & Inventory Management
+Order and Inventory Management
 
 - Inventory and stock management
-- Order status and payment status management
+- Order status management
+- Payment status management
 
 Communication
 
@@ -60,14 +61,14 @@ Communication
 
 Admin Features
 
-- Django Admin dashboard for managing products, inventory, and orders
+- Django Admin dashboard for managing products, categories, inventory, and orders
 
 Architecture
 
 Deboss Footwear follows Django's Model-Template-View (MTV) architecture.
 
 - Models: Manage application data, including products, customers, inventory, carts, and orders.
-- Views: Handle requests, application logic, and interactions between models and templates.
+- Views: Handle incoming requests, application logic, and interactions between models and templates.
 - Templates: Render the user interface using Django templates.
 - Database: PostgreSQL stores production data, while SQLite can be used for local development.
 
@@ -76,9 +77,9 @@ Architecture Diagram
 flowchart TD
     A[Customer / Browser] --> B[Django URLs]
     B --> C[Django Views]
-    C --> D[Models]
-    D --> E[(Database)]
-    C --> F[Templates]
+    C --> D[Django Models]
+    D --> E[(PostgreSQL Database)]
+    C --> F[Django Templates]
     F --> A
     C --> G[WhatsApp]
     H[Django Admin] --> D
@@ -96,7 +97,7 @@ pip install -r requirements.txt
 
 3. Configure Environment Variables
 
-Create a ".env" file in the project root and add:
+Create a ".env" file in the project root and configure the required environment variables.
 
 SECRET_KEY=your-generated-secret-key
 DEBUG=True
@@ -115,13 +116,13 @@ Open http://127.0.0.1:8000/ in your browser.
 
 Deployment
 
-The application is deployed on Render, with Neon PostgreSQL providing the production database.
+The application is deployed on Render, with Neon PostgreSQL providing the production database and Cloudinary handling media storage.
 
 Live URL: https://deboss-footwear.onrender.com
 
 Project Status
 
-Status: Live ✅
+Status: Live
 
 The application is deployed and accessible online.
 
