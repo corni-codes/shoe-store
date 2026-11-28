@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category, ProductVariant, CartItem, Order, OrderItem
 from .forms import CustomUserCreationForm, CheckoutForm
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db import transaction
@@ -266,6 +266,9 @@ def about(request):
 @login_required
 def contact(request):
     return render(request, 'contact.html')
+
+def health_check(request):
+    return HttpResponse("OK")
 
 def signup_view(request):
     if request.method == 'POST':

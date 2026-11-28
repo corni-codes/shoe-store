@@ -4,6 +4,7 @@ from .views import signup_view
 from django.contrib.auth import views as auth_views
 
 urlpatterns=[
+    path('health/', views.health_check, name='health_check'),
     path('home/', views.home, name='home'),
     path('shop/', views.shop, name='shop'),
     path('custom/', views.custom, name='custom'),
