@@ -1,3 +1,4 @@
+
 # Deboss Footwear
 
 A Django-powered e-commerce platform for footwear and fashion accessories, including shoes, belts, and more.
@@ -10,6 +11,18 @@ The platform allows customers to browse products, explore categories, view produ
 
 ![Deboss Footwear Homepage](homepage.jpg)
 
+### Shop Page
+
+![Deboss Footwear Shop](shop.jpg)
+
+### Cart Page
+
+![Deboss Footwear Cart](cart.jpg)
+
+### Order History
+
+![Deboss Footwear Orders](order.jpg)
+
 ### Custom Order Enquiries
 
 ![Deboss Footwear Custom Order](custom-order.jpg)
@@ -18,9 +31,10 @@ The platform allows customers to browse products, explore categories, view produ
 
 - **Backend:** Python, Django
 - **Database:** PostgreSQL
-- **Frontend:** HTML, CSS, JavaScript, Bootstrap
+- **Frontend:** HTML, CSS, JavaScript
 - **Deployment:** Render
 - **Database Hosting:** Neon
+- **Media Storage:** Cloudinary
 
 ## Features
 
@@ -118,11 +132,10 @@ The application is deployed on Render, with Neon PostgreSQL providing the produc
 
 ## Project Status
 
-**Status:** Live ✅
+**Status:** Live
 
 The application is deployed and accessible online.
 
 ## Author
 
 Developed by **corni-codes**.
-
